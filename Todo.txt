@@ -11,7 +11,7 @@ To do list:
 
 
 - Sort: by rating, by name of post, by name of author, by views ON PROFILE POST MANAGER
-
 - Ban user
 - Delete user
+- Add Model AI to ban 18+ and summary content (Img classify and NLP)
 

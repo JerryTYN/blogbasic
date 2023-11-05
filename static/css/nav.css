@@ -1,0 +1,82 @@
+/* CSS cho phần dropdown */
+.dropdown-menu {
+    border: 0;
+    border-radius: 0;
+    background: #fafafa;
+    max-width: 140px;
+    min-width: 70px;
+    left: auto;
+    right: 0;
+}
+
+.dropdown-item {
+    padding: 5px 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* CSS cho phần tìm kiếm */
+.search-bar {
+    position: relative;
+}
+
+/* .form-control {
+    border: none;
+    border-bottom: 2px solid #000;
+} */
+.input-group {
+    width: 600px;
+    margin: auto;
+}
+
+.input-group input.search-post:focus {
+    border-color: black;
+    color: black;
+    background-color: #f8f9fa;
+}
+
+.input-group input.search-post:focus+.input-group-text i.fas.fa-search {
+    color: black;
+}
+.input-group .input-group-text i.fas.fa-search {
+    color: #888; /* Đặt màu chữ thành màu xám nhạt */
+    font-size: 14px; /* Đặt kích thước chữ thành 14px */
+  }
+  .input-group input.search-post::placeholder {
+    color: #888; /* Đặt màu chữ trong placeholder thành màu xám nhạt */
+    font-size: 13px; /* Đặt kích thước chữ trong placeholder thành 14px */
+  }
+.search-post {
+    
+    border: none;
+    border-radius: 0;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #000;
+}
+
+.search-button {
+    background: transparent;
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+/* CSS cho mục "Profile" và "Logout" khi hover */
+.dropdown-item:hover:first-child {
+    background-color: #72dc35;
+    color: #fff;
+    border-radius: 0;
+}
+
+.dropdown-item:hover:last-child {
+    background-color: #dc3545;
+    color: #fff;
+    border-radius: 0;
+}
+
+/* Ẩn nút tam giác bên trong mục "Categories" */
+.dropdown-toggle.category-menu::after {
+    display: none;
+}

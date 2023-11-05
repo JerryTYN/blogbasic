@@ -1,0 +1,28 @@
+
+{% extends "main/base.html" %}
+{% block title %}
+Update Profile
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br>
+<form method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}{{form|crispy}}
+    {{ form.media }}
+    <button class="login100-form-btn btn btn-success" type="submit">
+        Update
+    </button>
+
+    <div class="text-center p-t-115">
+        <span class="txt1">
+            Nothings changed?
+        </span>
+
+        <a class="txt2" href="/home">
+            Back to home
+        </a>
+    </div>
+
+</form>
+{% endblock content %}

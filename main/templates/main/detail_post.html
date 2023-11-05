@@ -1,0 +1,212 @@
+{% extends "main/base.html" %} {% block title%}{{title}}{%endblock title%}
+{% load crispy_forms_tags %}
+{%block content %}
+<main class="mt-4 mb-5">
+  <div class="container">
+    <!--Grid row-->
+    <div class="row">
+      <!--Grid column-->
+      <div class="col-md-8 mb-4">
+        <!--Section: Post data-mdb-->
+
+        <section class="mb-4">
+          <img src=" {{ image_cover.url }} " class="img-fluid shadow-2-strong mb-4 image-cover" alt="" />
+          <!-- <img src="{{ image_cover.url }}" class="img-fluid shadow-2-strong rounded-5 mb-4 hover-zoom" alt="" /> -->
+          <div id="intro" class="p-5 text-center bg-light mt-2 mb-4 bg-cover">
+            <h1 class="mb-0 h4" style="font-family: 'Arial', sans-serif; color: #333">
+              {{title}}
+            </h1>
+          </div>
+
+          <div class="row align-items-center mb-4">
+            <div class="col-lg-6 text-center text-lg-start mb-3 m-lg-0">
+              <img src="https://mdbootstrap.com/img/Photos/Avatars/img (23).jpg" class="rounded-5 shadow-1-strong me-2"
+                height="35" alt="" loading="lazy" />
+              <span>
+                Published
+                {{ created_at|date:"d/m/Y" }} by </span>
+              <a href="" class="text-dark">{{author}}</a>
+            </div>
+          </div>
+        </section>
+
+        <section>{{ content | safe}}</section>
+        <section>
+          <form action="{% url 'like_post' post_detail_id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" name="post_id" value="{{ post_detail_id }}" class="btn">
+              {% if user_has_liked %}
+              <i class="fas fa-thumbs-up"></i>
+              {% else %}
+              <i class="far fa-thumbs-up"></i>
+              {% endif %}
+            </button>
+            <b style="vertical-align: middle;">{{ like_count }} | <i class="far fa-eye"></i> {{view_number}}</b>
+          </form>
+          <hr>
+        </section>
+
+
+
+
+        <!--Section: Author-->
+        <section class="author-section">
+          <div class="card">
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div class="author-info d-flex align-items-center">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                  alt="User Profile" class="rounded-5 shadow-1-strong me-2" height="35" alt="" loading="lazy" />
+                <div class="author-details ms-3">
+                  <h5 class="mb-0">{{author}}</h5>
+                </div>
+              </div>
+              <div class="author-stats d-flex" style="display: flex; gap: 10px">
+                <div class="author-stat" style="text-align: center">
+                  <p class="mb-0 small text-muted">Articles</p>
+                  <p class="mb-0">{{post_count}}</p>
+                </div>
+                <div class="author-stat" style="text-align: center">
+                  <p class="mb-0 small text-muted">Followers</p>
+                  <p class="mb-0">{{followers}}</p>
+                </div>
+                <div class="author-stat" style="text-align: center">
+                  <p class="mb-0 small text-muted">Like</p>
+                  <p class="mb-0">{{like_count}}</p>
+                </div>
+              </div>
+              <div class="author-action">
+                <section>
+                  <form action="{% url 'follow_author' author.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn mb-0 small text-muted">
+                      {% if is_following %}
+                      Unfollow
+                      {% else %}
+                      Follow
+                      {% endif %}
+                    </button>
+                  </form>
+                </section>
+              </div>
+
+            </div>
+          </div>
+        </section>
+        <!--Section: Author-->
+
+        <!--Section: Comments-->
+        <section class="mb-3">
+
+          <p class="text-center mt-4"><strong>Comments: {{comments.count}}</strong></p>
+          {% if comments %}
+          {% for comment in comments %}
+            <div class="card-body d-flex justify-content-between ">
+              <div class="author-info d-flex align-items-center">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                  alt="User Profile" class="rounded-5 shadow-1-strong me-2" height="35" alt="" loading="lazy" />
+                <div class="author-details ms-3">
+                  <p class="mb-0"><strong>  {{author}} </strong></p>
+                </div>
+              </div>
+              <div class="author-stats d-flex   align-items-center" style="display: flex">
+                {{comment.content}}
+              </div>
+              <div class="author-stats d-flex align-items-center" style="display: flex; gap: 10px">
+                {{comment.timestamp|date:"d/m/Y"}}
+              </div>
+            </div>
+          {% endfor %}
+          {% endif %}
+          <!-- Comment -->
+
+        </section>
+        <!--Section: Comments-->
+
+        <!--Section: Reply-->
+        <section>
+          <hr>
+          <p class="text-center"><strong>Leave a reply</strong></p>
+
+          <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-success">Publish</button>
+          </form>
+
+        </section>
+        <!--Section: Reply-->
+      </div>
+
+      <!--Grid column-->
+      <div class="col-md-4 mb-4">
+        <!--Section: Sidebar-->
+        <section style="top: 80px">
+          <!--Section: Ad-->
+          <section class="pb-4 mb-4">
+            <!-- Session categori and search  -->
+
+            <div class="col-md-12 col-lg-10 sidebar">
+
+
+              <div class="sidebar-box">
+                <h3 class="heading">Popular Posts</h3>
+                {% for post in allpost|slice:":6" %}
+
+                <div class="post-entry-sidebar">
+                  <ul>
+                    <li>
+                      <a href="{% url 'post_detail' post.id %}">
+                        <img src="{{post.image_cover.url}}" alt="Image placeholder" class="mr-4 img-mini" />
+                        <div class="text">
+                          <h4 class="title_pop">{{post.title}}</h4>
+                          <div class="post-meta">
+                            <span class="mr-2">{{ post.created_at|date:"d/m/Y" }}</span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                {% endfor %}
+              </div>
+
+
+              <div class="sidebar-box">
+                <h3 class="heading">Categories</h3>
+                <ul class="categories">
+                  {% for category in categories %}
+                  <li>
+                    <a href="{% url 'posts_by_category' category.id %}">
+                      {{ category.name }}
+                      <span>({{ category.post_count }})</span>
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+
+              <div class="sidebar-box">
+                <h3 class="heading">Tags</h3>
+                <ul class="tags">
+                  {% for category in categories %}
+                  <li>
+                    <a href="{% url 'posts_by_category' category.id %}">
+                      {{ category.name }}
+                      {% comment %} <span>({{ category.post_count }})</span> {% endcomment %}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+
+            </div>
+          </section>
+        </section>
+      </div>
+    </div>
+    <!--Grid row-->
+  </div>
+</main>
+
+{% endblock %}

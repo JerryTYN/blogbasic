@@ -1,0 +1,17 @@
+To do list:
+- Detail Post (done)
+- Edit Post (done)
+- Update profile (done)
+- Make all look better (100%)
+- Update model Post: add Like-DONE, view-DONE (BUT WHEN PRESS LIKE BUTTON, +1 VIEW BECAUSE AFTER LIKE BUTTON PRESSED PAGE HAS RELOAD), comment-DONE, categories-DONE (100% - but)
+- Update popular post by view and like. Update link post on Popular post secsion. (100%)
+- Make e-mail sending when author subcribed create a new post-DONE
+- Update model User: followed-DONE, unfollow author -DONE, LIKE-done - option, avatar-DONE.
+- Pageintion -done
+
+
+- Sort: by rating, by name of post, by name of author, by views ON PROFILE POST MANAGER
+
+- Ban user
+- Delete user
+

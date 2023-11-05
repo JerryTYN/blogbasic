@@ -1,0 +1,113 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        {% if posts %}
+        {% for post in posts %}
+        {% if forloop.counter0|divisibleby:3 %}
+    </div>
+    <div class="row justify-content-center">
+        {% endif %}
+        <div class="col-md-3 mt-4">
+            <div class="mb-4 post-card" style="height: 100%;">
+                <a href="{% url 'post_detail' post.id %}">
+
+                    <img src="{{ post.image_cover.url }}" class="card-img-top rounded-1 mb-1" alt="{{ post.title }}"
+                        style="width: 100%; height: 220px; object-fit: cover;">
+                </a>
+                {% for category in post.categories.all %}
+                {% if category.name == "Tips&Tricks" %}
+                <span class="post-category text-white mb-1 category-bg-1">
+                    {{ category.name }}
+                </span>
+                {% elif category.name == "Giải trí" %}
+                <span class="post-category text-white mb-1 category-bg-2">
+                    {{ category.name }}
+                </span>
+                {% elif category.name == "Thể thao" %}
+                <span class="post-category text-white mb-1 category-bg-3">
+                    {{ category.name }}
+                </span>
+                {% elif category.name == "Tài liệu" %}
+                <span class="post-category text-white mb-1 category-bg-4">
+                    {{ category.name }}
+                </span>
+                {% elif category.name == "Sức khỏe" %}
+                <span class="post-category text-white mb-1 category-bg-5">
+                    {{ category.name }}
+                </span>
+                {% elif category.name == "Ẩm thực" %}
+                <span class="post-category text-white mb-1 category-bg-6">
+                    {{ category.name }}
+                </span>
+                {% endif %}
+                {% endfor %}
+
+
+                <div class="card-body" style="display: flex; flex-direction: column; height: 100%;" ,
+                    href="{% url 'post_detail' post.id %}" s>
+                    <h5 class="card-title mt-2 truncate-text" style="font-size: 16px; height: 40px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                        <a class="" href="{% url 'post_detail' post.id %}">
+                            {{ post.title }}
+                        </a>
+                    </h5>
+                    
+                    <div class="card-description">
+                        <p class="truncated-description truncate-text" style="max-lines:3; 
+                        margin-top:4px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3; 
+                        font-size: 14px;
+                        -webkit-box-orient: vertical;
+                        flex: 1;
+                        ">
+                        
+                            {{ post.description}}
+                        </p>
+                        <div class="d-flex justify-content-between mt-2"  style="font-size: 14px; text-align-center">
+                            <p class="mb-0">
+                                By
+                                    {{ post.author }}
+                                
+                            </p>
+                            <p class="mb-0 ">
+                                {{ post.created_at|date:"d/m/Y" }}
+                            </p>
+                        </div>
+                        <a href="{% url 'post_detail' post.id %}" class="link text-decoration-none" style="font-size: 14px;">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+        <div class="pagination ">
+            <br/>
+            <span class="step-links">
+                {% if posts.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ posts.previous_page_number }}">previous</a>
+                {% endif %}
+                
+                <div class="page-info">
+                    <span>Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+                </div>
+            
+                {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}">next</a>
+                    <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        {% else %}
+        <h4 class='mt-4'>Opps...</h4>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
